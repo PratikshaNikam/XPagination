@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";  
+
+
 export default function Pagination() {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const rowPerPage = 10;
-  //const currentPage = 1;
+ 
   const lastIndex = currentPage * rowPerPage;
   const firstIndex = lastIndex - rowPerPage;
 
@@ -17,7 +19,12 @@ export default function Pagination() {
   useEffect(() => {
     fetch("https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json")
       .then((res) => res.json())
-      .then((data) => setData(data));
+      .then((data) => setData(data))
+      .catch(
+        (err) =>
+          console.log(err) ,
+        alert("failed to fetch data")
+    );
   }, []); 
 
   console.log(data);
@@ -68,8 +75,8 @@ export default function Pagination() {
        
         
       </table>
-      <nav>
-        <ul className="pagination">
+      
+        {/* <ul className="pagination">
           <li className='page-item'>
             <a href='#' className='page-link' onClick={prePage}>Prev</a>
           </li>
@@ -85,8 +92,22 @@ export default function Pagination() {
           <li className='page-item'>
             <a href='#' className='page-link' onClick={nextPage}>Next</a>
           </li>
-          </ul>
-      </nav>
+          </ul> */}
+        
+
+
+        
+      <div>
+          <button className='page-link' onClick={prePage}>Previous</button>
+          <p>{currentPage}</p>
+          <button  className='page-link' onClick={nextPage}>Next</button>
+
+      </div>
+         
+          
+          
+          
+      
     </div>
   );
 }
